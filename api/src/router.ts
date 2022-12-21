@@ -7,7 +7,6 @@ const router = Router()
  */
 
 router.get('/product', (req, res) => {
-    console.log('Getting products..');
     res.status(200);
     res.json({ message: 'Hello products' });
 });

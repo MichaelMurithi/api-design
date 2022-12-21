@@ -1,10 +1,12 @@
 import express from 'express';
+import morgan from 'morgan';
 import router from './router';
 
 const app = express();
 
+app.use(morgan(('dev')));
+
 app.get('/', (req, res) => {
-    console.log('Executing root endpoint');
     res.status(200);
     res.json({ message: 'Hello express product logs API is working' });
 });
