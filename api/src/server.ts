@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import morgan from 'morgan';
+import { protect } from './modules/auth/auth';
 import router from './router';
 
 const app = express();
@@ -15,6 +16,6 @@ app.get('/', (req, res) => {
     res.json({ message: 'Hello express product logs API is working' });
 });
 
-app.use('/api', router);
+app.use('/api', protect, router);
 
 export default app;
