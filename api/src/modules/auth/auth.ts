@@ -1,6 +1,9 @@
+import * as dotnev from 'dotenv';
 import { NextFunction, Response } from 'express-serve-static-core';
 import jwt from 'jsonwebtoken';
 import { User } from '../users/user.types';
+
+dotnev.config();
 
 const secret = process.env.JWT_SECRET;
 
