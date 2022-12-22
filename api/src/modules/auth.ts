@@ -1,7 +1,10 @@
 import bcrypt from 'bcrypt';
+import * as dotenv from 'dotenv';
 import { NextFunction, Response } from 'express-serve-static-core';
 import jwt from 'jsonwebtoken';
 import { User } from '../types/user.types';
+
+dotenv.config();
 
 export const comparePasswords = (password: string, hash: string) => {
     return bcrypt.compare(password, hash);
