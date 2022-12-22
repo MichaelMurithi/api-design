@@ -1,9 +1,15 @@
-import * as dotnev from 'dotenv';
+import bcrypt from 'bcrypt';
 import { NextFunction, Response } from 'express-serve-static-core';
 import jwt from 'jsonwebtoken';
-import { User } from '../users/user.types';
+import { User } from '../types/user.types';
 
-dotnev.config();
+export const comparePasswords = (password: string, hash: string) => {
+    return bcrypt.compare(password, hash);
+}
+
+export const hashPassword = (password: string) => {
+    return bcrypt.hash(password, 10);
+}
 
 const secret = process.env.JWT_SECRET;
 

@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import morgan from 'morgan';
-import { protect } from './modules/auth/auth';
+import { protect } from './modules/auth';
 import router from './router';
 
 const app = express();
