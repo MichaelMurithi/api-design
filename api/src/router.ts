@@ -1,4 +1,4 @@
-import { Request, Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 import { body } from 'express-validator';
 import { createProduct, deleteProduct, getOne, getProducts, updateProduct } from './handlers/product';
 import { createUpdate, deleteUpdate, getOneUpdate, getUpdates, updateUpdate } from './handlers/update';
@@ -16,9 +16,9 @@ router.put('/products/:id', body('name').isString(), (req, res) => {
     handleInputErrors(req as Request, res);
     updateProduct(req, res);
 });
-router.post('/products', body('name').isString(), (req, res) => {
+router.post('/products', body('name').isString(), (req, res, next) => {
     handleInputErrors(req as Request, res);
-    createProduct(req, res);
+    createProduct(req, res, next);
 });
 router.delete('/products/:id', deleteProduct);
 
@@ -61,6 +61,19 @@ router.post('/updatepoints',
     () => { }
 );
 router.delete('/updatepoints/:id', () => { });
+
+router.use((err: any, req: any, res: Response, next: NextFunction) => {
+    if (err.type === 'auth') {
+        res.status(401)
+            .json({ message: 'Unauthorized' });
+    } else if (err.type === 'input') {
+        res.status(400)
+            .json({ message: 'Invalid input' });
+    } else {
+        res.status(500)
+            .json({ message: "Server error" });
+    }
+});
 
 export default router
 

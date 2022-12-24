@@ -23,9 +23,17 @@ app.use('/api', protect, router);
 app.post('/signup', createNewUser);
 app.post('/signin', signin);
 
-app.use((err: Error, req: any, res: Response, next: NextFunction) => {
-    console.log(err);
-    res.json({ message: "There was an error" });
+app.use((err: any, req: any, res: Response, next: NextFunction) => {
+    if (err.type === 'auth') {
+        res.status(401)
+            .json({ message: 'Unauthorized' });
+    } else if (err.type === 'input') {
+        res.status(400)
+            .json({ message: 'Invalid input' });
+    } else {
+        res.status(500)
+            .json({ message: "Server error" });
+    }
 });
 
 export default app;
