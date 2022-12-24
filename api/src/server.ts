@@ -12,8 +12,10 @@ app.use(morgan(('dev')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-    throw new Error("Something crazy happened");
+app.get('/', (req, res, next) => {
+    setTimeout(() => {
+        next(new Error("Something crazy happened"));
+    }, 1);
 });
 
 app.use('/api', protect, router);
