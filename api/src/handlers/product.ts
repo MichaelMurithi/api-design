@@ -24,7 +24,7 @@ export const getProducts = async (req: any, res: Response) => {
 export const getOne = async (req: any, res: Response) => {
     const id = req.params.id;
 
-    const product = prisma.product.findFirst({
+    const product = await prisma.product.findFirst({
         where: {
             id,
             belongsToId: req.user.id
@@ -66,11 +66,11 @@ export const updateProduct = async (req: any, res: Response) => {
 };
 
 export const deleteProduct = async (req: any, res: Response) => {
-    const deleted = await prisma.product.delete({
+    await prisma.product.delete({
         where: {
             id: req.params.id
         }
     });
 
-    res.json({ data: deleted });
+    res.status(204);
 }
