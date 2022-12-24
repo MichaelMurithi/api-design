@@ -1,5 +1,5 @@
 import cors from 'cors';
-import express from 'express';
+import express, { NextFunction, Response } from 'express';
 import morgan from 'morgan';
 import { createNewUser, signin } from './handlers/user';
 import { protect } from './modules/auth';
@@ -13,13 +13,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.status(200);
-    res.json({ message: 'Hello express product logs API is working' });
+    throw new Error("Something crazy happened");
 });
 
 app.use('/api', protect, router);
 
 app.post('/signup', createNewUser);
 app.post('/signin', signin);
+
+app.use((err: Error, req: any, res: Response, next: NextFunction) => {
+    console.log(err);
+    res.json({ message: "There was an error" });
+});
 
 export default app;
